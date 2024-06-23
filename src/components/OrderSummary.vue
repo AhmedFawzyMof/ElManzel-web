@@ -31,14 +31,6 @@
       <div
         class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
       >
-        <dt class="font-bold text-gray-900">Email Address</dt>
-        <dd class="text-gray-700 sm:col-span-2">
-          {{ order.email }}
-        </dd>
-      </div>
-      <div
-        class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
-      >
         <dt class="font-bold text-gray-900">Order Status</dt>
         <dd class="text-gray-700 sm:col-span-2">
           {{ order.order_status }}

@@ -1,6 +1,12 @@
 <template>
-  <div class="w-full flex items-center justify-center mt-10 mb-10 flex-nowrap">
+  <div
+    class="w-full flex flex-col items-center justify-center mt-10 mb-10 flex-nowrap gap-3"
+    v-if="orders.length > 0"
+  >
     <OrderSummary v-for="order in orders" v-bind:order="order" />
+  </div>
+  <div class="h-screen grid place-items-center" v-else>
+    <h1 class="text-3xl font-bold">No Offers Found</h1>
   </div>
 </template>
 
@@ -26,7 +32,7 @@ export default {
   methods: {
     async getMyOrders() {
       this.$store.state.loading = true;
-      await axios.get("/order-histroy").then((response) => {
+      await axios.get("/api/orderhistory").then((response) => {
         this.orders = response.data.Orders;
         console.log(this.orders);
       });

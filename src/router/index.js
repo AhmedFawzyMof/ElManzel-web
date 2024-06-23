@@ -86,6 +86,11 @@ const routes = [
       requireLogin: true,
     },
   },
+  {
+    path: "/offers/:subcategory",
+    name: "offers",
+    component: () => import("../views/Offers.vue"),
+  },
 ];
 
 const router = createRouter({

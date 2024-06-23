@@ -5,7 +5,7 @@
     <div class="details w-full sm:col-start-1">
       <h1 class="text-2xl">{{ product.name }}</h1>
       <p class="text-stone-700 text-sm pt-5">{{ product.description }}</p>
-      <p class="mt-4 text-red-600" v-if="product.warranty.Valid">
+      <p class="mt-4 text-red-600" v-if="warranty">
         Warranty {{ product.warranty.String }}
       </p>
       <p class="mt-4">brand: {{ product.brand }}</p>
@@ -43,18 +43,23 @@
       </div>
     </div>
     <div
-      class="image w-full mt-10 sm:col-start-2 sm:row-span-2 sm:mt-0 grid grid-cols-4 grid-rows-5 sm:grid-rows-4 sm:grid-cols-5 place-items-center gap-3"
+      class="image w-full mt-10 sm:col-start-2 sm:row-span-2 sm:mt-0 place-items-center gap-3"
+      :class="
+        images
+          ? 'grid grid-cols-4 grid-rows-5 sm:grid-rows-4 sm:grid-cols-5'
+          : ''
+      "
     >
       <img
         class="rounded-lg shadow-lg max-h-96 col-span-4 row-span-4"
-        :src="this.image"
+        :src="image"
         :alt="product.name"
       />
       <img
         v-if="images"
         v-for="img in theImages"
-        @click="chingeImage(img)"
-        :src="img"
+        @click="chingeImage(img.image)"
+        :src="img.image"
         class="mt-2 rounded-lg shadow-lg cursor-pointer"
       />
     </div>
@@ -109,6 +114,7 @@ export default {
       color: "",
       colors: false,
       images: false,
+      warranty: false,
       theImages: [],
       TheColors: [],
       quantity: 1,
@@ -143,32 +149,36 @@ export default {
       this.$store.state.loading = true;
       const id = this.$route.params.id;
 
-      await axios.get(`/api/product/${id}`).then((response) => {
-        const Products = response.data[id];
+      const products = await axios.get(`/api/product/${id}`);
+      const Product = products.data[id];
 
-        const imgs = Products.images;
+      const images = Product.images;
+      const colors = Product.colors;
 
-        if (imgs.length > 1) {
-          this.images = true;
-        }
-        this.image = imgs[0].image;
+      if (images.length > 1) {
+        this.image = images[0].image;
+        this.images = true;
+        this.theImages = images;
+      } else {
+        this.image = images[0].image;
+      }
 
-        imgs.forEach((img) => {
-          this.theImages.push(img.image);
+      if (colors[0].Valid) {
+        this.colors = true;
+        this.color = colors[0].String;
+
+        colors.forEach((color) => {
+          this.TheColors.push(color.String);
         });
+      }
 
-        const colors = Products.colors;
+      if (Product.warranty.Valid) {
+        this.warranty = true;
+      }
 
-        if (colors.length > 1 && colors[0].Valid) {
-          this.colors = true;
-          this.color = colors[0].String;
-          colors.forEach((color) => {
-            this.TheColors.push(color.String);
-          });
-        }
+      this.product = Product;
 
-        this.product = Products;
-      });
+      console.log(Product);
 
       this.$store.state.loading = false;
     },
@@ -177,7 +187,6 @@ export default {
         id: this.product.id,
         name: this.product.name,
         image: this.image,
-        slug: this.product.slug,
         price: this.product.price,
       };
       if (this.color != "") {

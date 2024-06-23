@@ -10,7 +10,7 @@
   >
     <slide v-for="(slide, index) in slides" :key="index">
       <router-link
-        :to="'/products/' + slide.product"
+        :to="'/products/' + slide.product.Int64"
         class="w-[90%] h-[150px] max-w-[900px] flex items-center justify-center rounded-lg"
       >
         <img :src="slide.image" class="h-full rounded-lg w-full" />
@@ -29,7 +29,7 @@
       <router-link
         v-for="offer in offers"
         :key="offer.id"
-        :to="offer.id === 0 ? '/all-products' : `/offers/${offer.id}`"
+        :to="offer.subcategory === 0 ? '/all-products' : `/offers/${offer.id}`"
         class="w-[125px] h-[125px] flex items-center justify-center rounded-lg relative"
       >
         <p class="absolute text-white w-full top-50% left-50% text-center">
@@ -149,11 +149,12 @@ export default {
         {
           id: 0,
           name: "كل المنتجات",
-          image: "http://localhost:5500/assets/img/main.jpg",
+          image: "https://elbaytbaytk-backend.onrender.com/assets/img/main.jpg",
         },
         ...homeData.data.Offers,
       ];
 
+      console.log(homeData);
       let categories = [];
       let subcategories = homeData.data.SubCategories;
 
@@ -175,7 +176,6 @@ export default {
           category.subcategories.push(subcategory);
         }
       }
-      console.log(categories);
       this.Categories = categories;
 
       this.$store.state.loading = false;

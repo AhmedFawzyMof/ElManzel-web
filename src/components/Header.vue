@@ -77,7 +77,7 @@
           class="menu absolute bg-white pl-2 pr-2 pt-5 pb-5 flex gap-3 flex-col w-64 rounded-md shadow-md"
         >
           <button
-            @click="(showcategory = !showcategory), (showtags = false)"
+            @click="showcategory = !showcategory"
             class="hover:bg-gray-50 h-9 rounded-lg flex items-center pl-2"
             to="/"
           >
@@ -90,21 +90,6 @@
             :to="'/category/' + category.slug"
           >
             <i class="bx bx-right-arrow-alt"></i> {{ category.name }}
-          </router-link>
-          <button
-            @click="(showtags = !showtags), (showcategory = false)"
-            class="hover:bg-gray-50 h-9 rounded-lg flex items-center pl-2"
-            to="/"
-          >
-            Tags <i class="bx bx-chevron-down"></i>
-          </button>
-          <router-link
-            :class="{ flex: showtags, hidden: !showtags }"
-            class="hover:bg-gray-50 h-9 rounded-lg flex items-center pl-5"
-            v-for="tag in this.tags"
-            :to="'/tag/' + tag.slug"
-          >
-            <i class="bx bx-right-arrow-alt"></i> {{ tag.name }}
           </router-link>
           <router-link
             class="hover:bg-gray-50 h-9 rounded-lg flex items-center pl-2"
@@ -158,7 +143,7 @@
       <div class="mt-8">
         <div class="menu hidden relative sm:flex gap-3 flex-row w-full">
           <button
-            @click="(showcategory = !showcategory), (showtags = false)"
+            @click="showcategory = !showcategory"
             class="hover:bg-gray-50 h-9 rounded-lg flex items-center pl-2"
           >
             Categories <i class="bx bx-chevron-down"></i>
@@ -173,25 +158,6 @@
               :to="'/category/' + category.name"
             >
               <i class="bx bx-right-arrow-alt"></i> {{ category.name }}
-            </router-link>
-          </div>
-          <button
-            @click="(showtags = !showtags), (showcategory = false)"
-            class="hover:bg-gray-50 h-9 rounded-lg flex items-center pl-2"
-            to="/"
-          >
-            Tags <i class="bx bx-chevron-down"></i>
-          </button>
-          <div
-            :class="{ flex: showtags, hidden: !showtags }"
-            class="submenu absolute flex flex-col items-start top-10 left-24 bg-white w-60 rounded-lg p-3 shadow-lg"
-          >
-            <router-link
-              class="hover:bg-gray-50 h-9 rounded-lg flex items-center pl-2 w-full"
-              v-for="tag in this.tags"
-              :to="'/tag/' + tag.name"
-            >
-              <i class="bx bx-right-arrow-alt"></i> {{ tag.name }}
             </router-link>
           </div>
           <router-link
@@ -248,12 +214,41 @@
   </header>
 </template>
 <script>
+import axios from "axios";
 export default {
   name: "Header",
   data() {
     return {
       showMobileMenu: false,
+      showcategory: false,
+      categories: [],
+      cart: {
+        items: [],
+      },
     };
+  },
+  mounted() {
+    this.cart = this.$store.state.cart;
+    this.GetCategory();
+  },
+  methods: {
+    async GetCategory() {
+      const categories = await axios.get("/api/allcategories");
+      this.categories = categories.data.Categories;
+    },
+    Logout() {
+      this.$store.dispatch("logout");
+      this.$router.push("/");
+    },
+  },
+  computed: {
+    cartTotalLength() {
+      let totalLength = 0;
+      for (let i = 0; i < this.cart.items.length; i++) {
+        totalLength += this.cart.items[i].quantity;
+      }
+      return totalLength;
+    },
   },
 };
 </script>
