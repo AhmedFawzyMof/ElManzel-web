@@ -49,9 +49,14 @@
           <h1>{{ category.name }}</h1>
           <div class="w-full grid place-items-center grid-cols-2 gap-3">
             <router-link
-              v-for="sub in category.subcategories"
+              v-for="(sub, index) in category.subcategories"
               :to="`/subcategory/${sub.id}`"
               :key="sub.id"
+              :class="
+                handelSubCategoriesSize(category.subcategories.length, sub.name)
+                  ? ' col-span-2'
+                  : ''
+              "
             >
               <img :src="sub.image" :alt="sub.name" class="w-full rounded-md" />
               <p class="text-[12px]">{{ sub.name }}</p>
@@ -117,21 +122,25 @@ export default {
     window.addEventListener("resize", this.handleResize);
   },
   methods: {
+    handelSubCategoriesSize(sublength, name) {
+      console.log(sublength, name);
+      if (((sublength - 1) & 1) === 0) {
+        return true;
+      }
+      return false;
+    },
     handleResize() {
       const width = window.innerWidth;
       if (width <= 768) {
         this.width = 1;
-        console.log(this.width);
         return;
       }
       if (width >= 992) {
         this.width = 2;
-        console.log(this.width);
         return;
       }
       if (width >= 1400) {
         this.width = 3;
-        console.log(this.width);
         return;
       }
     },
