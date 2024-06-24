@@ -43,7 +43,7 @@
       </div>
     </div>
     <div
-      class="image w-full mt-10 sm:col-start-2 sm:row-span-2 sm:mt-0 place-items-center gap-3"
+      class="image w-full h-full mt-10 sm:col-start-2 sm:row-span-2 sm:mt-0 place-items-center gap-3"
       :class="
         images
           ? 'grid grid-cols-4 grid-rows-5 sm:grid-rows-4 sm:grid-cols-5'
@@ -51,7 +51,7 @@
       "
     >
       <img
-        class="rounded-lg shadow-lg max-h-96 col-span-4 row-span-4"
+        class="rounded-lg shadow-lg w-full h-auto col-span-4 row-span-4"
         :src="image"
         :alt="product.name"
       />

@@ -1,6 +1,6 @@
 <template>
   <carousel
-    :items-to-show="width >= 1439 ? 3 : 1"
+    :items-to-show="width"
     :autoplay="5000"
     :pauseAutoplayOnHover="true"
     :touchDrag="true"
@@ -11,7 +11,7 @@
     <slide v-for="(slide, index) in slides" :key="index">
       <router-link
         :to="'/products/' + slide.product.Int64"
-        class="w-[90%] h-[150px] max-w-[900px] flex items-center justify-center rounded-lg"
+        class="w-[90%] h-56 max-w-[900px] flex items-center justify-center rounded-lg"
       >
         <img :src="slide.image" class="h-full rounded-lg w-full" />
       </router-link>
@@ -21,18 +21,17 @@
       <pagination />
     </template>
   </carousel>
-  <div class="w-[90%] mx-auto flex lg:justify-center overflow-scroll">
-    <div
-      class="offerdiv flex gap-5 mb-6 mt-6 items-center justify-center"
-      :style="{ width: `${offers.length * 160}px` }"
-    >
+  <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div class="grid grid-cols-2 gap-3 px-3 md:px-6">
       <router-link
         v-for="offer in offers"
         :key="offer.id"
         :to="offer.subcategory === 0 ? '/all-products' : `/offers/${offer.id}`"
-        class="w-[125px] h-[125px] flex items-center justify-center rounded-lg relative"
+        class="w-full h-48 flex items-center justify-center rounded-lg relative"
       >
-        <p class="absolute text-white w-full top-50% left-50% text-center">
+        <p
+          class="absolute h-full bg-black/30 grid place-items-center text-white w-full top-50% left-50% text-center"
+        >
           {{ offer.name }}
         </p>
         <img :src="offer.image" class="w-full h-full rounded-lg" />
@@ -40,30 +39,11 @@
     </div>
   </div>
 
-  <div
-    class="categories p-3 flex gap-3 lg:gap-8 items-center justify-center flex-wrap"
-  >
-    <a
-      class="category w-[30%] md:w-[22.5%] lg:w-[10.5%] flex flex-col"
-      v-for="category in categories"
-      :href="'/category/' + category.name"
-    >
-      <img
-        :src="category.img"
-        class="w-full h-[84px] flex items-center justify-center rounded-md overflow-hidden shadow-lg"
-      />
-      <p class="h-[50px] grid place-items-center text-center">
-        {{ category.name }}
-      </p>
-    </a>
-  </div>
-  <div id="product-collection">
+  <div id="category-collection">
     <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-      <h1>Categories</h1>
-
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
         <div
-          class="categories w-full shadow-lg px-4 py-4 rounded-lg"
+          class="categories w-full shadow-lg p-2 rounded-lg"
           v-for="category in Categories"
         >
           <h1>{{ category.name }}</h1>
@@ -73,11 +53,7 @@
               :to="`/subcategory/${sub.id}`"
               :key="sub.id"
             >
-              <img
-                :src="sub.image"
-                :alt="sub.name"
-                class="w-[150px] rounded-md"
-              />
+              <img :src="sub.image" :alt="sub.name" class="w-full rounded-md" />
               <p class="text-[12px]">{{ sub.name }}</p>
             </router-link>
           </div>
@@ -131,30 +107,40 @@ export default {
       slides: [],
       Categories: [],
       offers: [],
-      width: 0,
+      width: 2,
     };
   },
   mounted() {
     this.getLatestProducts();
     document.title = "البيت بيتك";
-    this.width = window.innerWidth;
+    document.addEventListener("DOMContentLoaded", this.handleResize);
+    window.addEventListener("resize", this.handleResize);
   },
   methods: {
+    handleResize() {
+      const width = window.innerWidth;
+      if (width <= 768) {
+        this.width = 1;
+        console.log(this.width);
+        return;
+      }
+      if (width >= 992) {
+        this.width = 2;
+        console.log(this.width);
+        return;
+      }
+      if (width >= 1400) {
+        this.width = 3;
+        console.log(this.width);
+        return;
+      }
+    },
     async getLatestProducts() {
       this.$store.state.loading = true;
       const homeData = await axios.get("/api/home");
 
       this.slides = homeData.data.Carousels;
-      this.offers = [
-        {
-          id: 0,
-          name: "كل المنتجات",
-          image: "https://elbaytbaytk-backend.onrender.com/assets/img/main.jpg",
-        },
-        ...homeData.data.Offers,
-      ];
-
-      console.log(homeData);
+      this.offers = homeData.data.Offers;
       let categories = [];
       let subcategories = homeData.data.SubCategories;
 
