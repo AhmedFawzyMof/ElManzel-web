@@ -117,7 +117,7 @@ export default {
   },
   mounted() {
     this.getLatestProducts();
-    document.title = "البيت بيتك";
+    document.title = "المنزل";
     document.addEventListener("DOMContentLoaded", this.handleResize);
     window.addEventListener("resize", this.handleResize);
   },

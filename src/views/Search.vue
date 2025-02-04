@@ -28,7 +28,7 @@ export default {
     };
   },
   mounted() {
-    document.title = "Search | البيت بيتك";
+    document.title = "Search | المنزل";
 
     let uri = window.location.search;
     let params = new URLSearchParams(uri);

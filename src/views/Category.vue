@@ -56,14 +56,14 @@ export default {
   methods: {
     async getCategory() {
       const categorySlug = this.$route.params.id;
-      document.title = "البيت بيتك";
+      document.title = "المنزل";
 
       this.$store.state.loading = true;
       const category = await axios.get(
         `/api/category/${categorySlug}/${this.limit}`
       );
 
-      document.title = category.data.Category.name + " | البيت بيتك";
+      document.title = category.data.Category.name + " | المنزل";
 
       this.products = category.data.Products;
       this.subcategories = category.data.SubCategories;

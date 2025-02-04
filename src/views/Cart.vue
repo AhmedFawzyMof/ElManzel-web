@@ -82,9 +82,9 @@ export default {
     this.cart = this.$store.state.cart;
 
     if (this.$store.state.Lang) {
-      document.title = "عربة التسوق الخاصة بي | البيت بيتك";
+      document.title = "عربة التسوق الخاصة بي | المنزل";
     } else {
-      document.title = "My Cart | البيت بيتك";
+      document.title = "My Cart | المنزل";
     }
   },
   methods: {

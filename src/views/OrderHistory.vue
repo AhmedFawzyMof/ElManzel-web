@@ -25,7 +25,7 @@ export default {
     };
   },
   mounted() {
-    document.title = "Order History | البيت بيتك";
+    document.title = "Order History | المنزل";
 
     this.getMyOrders();
   },

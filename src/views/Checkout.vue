@@ -194,9 +194,9 @@ export default {
     script.addEventListener("load", this.setLoaded);
     document.body.appendChild(script);
     if (this.$store.state.Lang) {
-      document.title = "الدفع | البيت بيتك";
+      document.title = "الدفع | المنزل";
     } else {
-      document.title = "Checkout | البيت بيتك";
+      document.title = "Checkout | المنزل";
     }
 
     this.cart = this.$store.state.cart;

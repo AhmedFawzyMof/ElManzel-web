@@ -19,7 +19,7 @@
           <h2
             class="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl"
           >
-            Welcome to البيت بيتك
+            Welcome to المنزل
           </h2>
 
           <p class="mt-4 leading-relaxed text-white/90">
@@ -45,7 +45,7 @@
             <h1
               class="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl"
             >
-              Welcome to البيت بيتك
+              Welcome to المنزل
             </h1>
 
             <p class="mt-4 leading-relaxed text-gray-500">
@@ -206,7 +206,7 @@ export default {
       this.$router.push("/");
     }
 
-    document.title = "Register | البيت بيتك";
+    document.title = "Register | المنزل";
   },
   methods: {
     async submitForm() {

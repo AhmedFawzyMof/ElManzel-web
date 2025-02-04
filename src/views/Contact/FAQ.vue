@@ -136,9 +136,9 @@ export default {
   name: "FAQ",
   mounted() {
     if (this.$store.state.Lang) {
-      document.title = "الأسئلة الشائعة | البيت بيتك";
+      document.title = "الأسئلة الشائعة | المنزل";
     } else {
-      document.title = "FAQ | البيت بيتك";
+      document.title = "FAQ | المنزل";
     }
   },
 };

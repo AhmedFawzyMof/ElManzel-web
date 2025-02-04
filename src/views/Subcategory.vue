@@ -80,13 +80,13 @@ export default {
     async getTag() {
       this.$store.state.loading = true;
       const id = this.$route.params.id;
-      document.title = "البيت بيتك";
+      document.title = "المنزل";
 
       const subcategory = await axios.get(
         `/api/subcategory/${id}/${this.limit}`
       );
 
-      document.title = subcategory.data.SubCategory.name + " | البيت بيتك";
+      document.title = subcategory.data.SubCategory.name + " | المنزل";
       this.products = subcategory.data.Products;
 
       this.$store.state.loading = false;

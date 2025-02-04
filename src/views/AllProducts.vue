@@ -66,7 +66,7 @@ export default {
   mounted() {
     this.getAllCategories();
 
-    document.title = "All Products | البيت بيتك";
+    document.title = "All Products | المنزل";
   },
   methods: {
     async getAllCategories() {

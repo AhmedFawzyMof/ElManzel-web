@@ -83,11 +83,11 @@ export default {
     async getOffer() {
       this.$store.state.loading = true;
       const subcategory = this.$route.params.subcategory;
-      document.title = "البيت بيتك";
+      document.title = "المنزل";
 
       const offer = await axios.get(`/api/offer/${subcategory}/${this.limit}`);
 
-      document.title = "البيت بيتك";
+      document.title = "المنزل";
       this.products = offer.data.Products;
 
       this.$store.state.loading = false;
