@@ -1,10 +1,38 @@
-# Vue 3 + Vite
-
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
+# Elmanzel-frontend
 ## Recommended IDE Setup
 
 - [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-# H-A-Store
-# H-A-Store
-# H-A-Store
+
+## Installation Guide
+
+Follow these steps to download and install this Vue 3 project with Vite from GitHub.
+
+### Prerequisites
+- Install [Node.js](https://nodejs.org/) (version 14+ recommended)
+- Install [Git](https://git-scm.com/)
+
+### Clone the Repository
+```sh
+git clone https://github.com/AhmedFawzyMof/ElManzel-web.git
+cd yourproject
+```
+
+### Install Dependencies
+```sh
+npm install
+```
+
+### Start the Development Server
+```sh
+npm run dev
+```
+
+### Build for Production
+```sh
+npm run build
+```
+
+### Preview the Production Build
+```sh
+npm run preview
+```
